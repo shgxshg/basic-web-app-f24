@@ -15,6 +15,12 @@ export default function QueryProcessor(query: string): string {
     return ( "ataib" );
   }
 
+  const arithmeticMatch = query.match(/what is (\d+(?: plus \d+)+)\?/i);
+  if (arithmeticMatch) {
+    const numbers = arithmeticMatch[1].split(' plus ').map(num => parseInt(num, 10));
+    const sum = numbers.reduce((acc, curr) => acc + curr, 0);
+    return sum.toString();
+  }
   const additionMatch = query.toLowerCase().match(/what is (\d+) plus (\d+)\?/);
   if (additionMatch) {
     const num1 = parseInt(additionMatch[1], 10);
