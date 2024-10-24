@@ -13,64 +13,52 @@ export default function QueryProcessor(query: string): string {
     return ( "ataib" );
   }
 
-  if (query.includes("What is your name?")) {
-    return "ataib-313";
-  }
-  if (query.includes("Which of the following numbers is the largest: 55, 94, 67?")) {
-    return "94";
-  }
-  if (query.includes("What is 17 plus 12?")) {
-    return "29";
-  }
-
-  if (query.includes("Which of the following numbers is the largest: 31, 58, 48?")) {
-    return "58";
-  }
-  if (query.includes("Which of the following numbers is the largest: 23, 89, 52?")) {
-    return "89";
-  }
-
-  if (query.includes("Which of the following numbers is the largest: 10, 25, 55?")) {
-    return "55";
-  }
-
-  if (query.includes("Which of the following numbers is the largest: 76, 87, 3?")) {
-    return "87";
-  }
-
-  const arithmeticMatch = query.match(/what is (\d+) plus (\d+)\?/);
-  if (arithmeticMatch) {
-    const num1 = parseInt(arithmeticMatch[1], 10);
-    const num2 = parseInt(arithmeticMatch[2], 10);
+  const additionMatch = query.toLowerCase().match(/what is (\d+) plus (\d+)\?/);
+  if (additionMatch) {
+    const num1 = parseInt(additionMatch[1], 10);
+    const num2 = parseInt(additionMatch[2], 10);
     return (num1 + num2).toString();
   }
 
-  const largestNumberMatch = query.match(/which of the following numbers is the largest: ([\d, ]+)\?/);
-  if (largestNumberMatch) {
-    const numbers = largestNumberMatch[1].split(',').map(num => parseInt(num.trim(), 10));
-    const largestNumber = Math.max(...numbers);
-    return largestNumber.toString();
+  const largestMatch = query.toLowerCase().match(/which of the following numbers is the largest: (\d+), (\d+), (\d+)\?/);
+  if (largestMatch) {
+    const num1 = parseInt(largestMatch[1], 10);
+    const num2 = parseInt(largestMatch[2], 10);
+    const num3 = parseInt(largestMatch[3], 10);
+    const largest = Math.max(num1, num2, num3);
+    return largest.toString();
   }
 
-  const  multiplyMatch = query.match(/what is (\d+) multiplied by (\d+)\?/);
-  if ( multiplyMatch) {
-    const num1 = parseInt( multiplyMatch[1], 10);
-    const num2 = parseInt( multiplyMatch[2], 10);
+  const multiplicationMatch = query.toLowerCase().match(/what is (\d+) multiplied by (\d+)\?/);
+  if (multiplicationMatch) {
+    const num1 = parseInt(multiplicationMatch[1], 10);
+    const num2 = parseInt(multiplicationMatch[2], 10);
     return (num1 * num2).toString();
   }
 
-  const squareCubeMatch = query.match(/which of the following numbers is both a square and a cube: ([\d, ]+)\?/);
+  const squareCubeMatch = query.toLowerCase().match(/which of the following numbers is both a square and a cube: ([\d, ]+)\?/);
   if (squareCubeMatch) {
     const numbers = squareCubeMatch[1].split(',').map(num => parseInt(num.trim(), 10));
-    const isSquareAndCube = (num: number) => {
+    const result = numbers.filter(num => {
       const sqrt = Math.sqrt(num);
       const cbrt = Math.cbrt(num);
       return Number.isInteger(sqrt) && Number.isInteger(cbrt);
+    });
+    return result.join(', ');
+  }
+
+  const primeMatch = query.toLowerCase().match(/which of the following numbers are primes: ([\d, ]+)\?/);
+  if (primeMatch) {
+    const numbers = primeMatch[1].split(',').map(num => parseInt(num.trim(), 10));
+    const isPrime = (num: number) => {
+      if (num <= 1) return false;
+      for (let i = 2; i <= Math.sqrt(num); i++) {
+        if (num % i === 0) return false;
+      }
+      return true;
     };
-    const result = numbers.find(isSquareAndCube);
-    return result ? result.toString() : "";
+    const result = numbers.filter(isPrime);
+    return result.join(', ');
   }
   return "";
-
-
 }
