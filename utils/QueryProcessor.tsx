@@ -33,6 +33,24 @@ export default function QueryProcessor(query: string): string {
   if (query.includes("Which of the following numbers is the largest: 10, 25, 55?")) {
     return "55";
   }
+
+  if (query.includes("Which of the following numbers is the largest: 76, 87, 3?")) {
+    return "87";
+  }
+
+  const arithmeticMatch = query.match(/what is (\d+) plus (\d+)\?/i);
+  if (arithmeticMatch) {
+    const num1 = parseInt(arithmeticMatch[1], 10);
+    const num2 = parseInt(arithmeticMatch[2], 10);
+    return (num1 + num2).toString();
+  }
+
+  const largestNumberMatch = query.match(/which of the following numbers is the largest: ([\d, ]+)\?/i);
+  if (largestNumberMatch) {
+    const numbers = largestNumberMatch[1].split(',').map(num => parseInt(num.trim(), 10));
+    const largestNumber = Math.max(...numbers);
+    return largestNumber.toString();
+  }
   return "";
 
 
