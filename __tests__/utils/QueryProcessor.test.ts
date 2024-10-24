@@ -32,4 +32,30 @@ describe("QueryProcessor", () => {
         const response: string = QueryProcessor(query);
         expect(response).toBe("ataib-313");
     });
+
+    test ('should return 94', () => {
+        const query = "Which of the following numbers is the largest: 55, 94, 67?";
+        const response: string = QueryProcessor(query);
+        expect(response).toBe("94");
+    });
+
+    test ('should return 29', () => {
+        const query = "What is 17 plus 12?";
+        const response: string = QueryProcessor(query);
+        expect(response).toBe("29");
+    });
+
+    test ('should return 58', () => {
+        const query = "Which of the following numbers is the largest: 31, 58, 48?";
+        const response: string = QueryProcessor(query);
+        expect(response).toBe("58");
+    });
+
+    test ('should return 89', () => {
+        const query = "Which of the following numbers is the largest: 23, 89, 52?";
+        const response: string = QueryProcessor(query);
+        expect(response).toBe("89");
+    });
+    
+
 });
