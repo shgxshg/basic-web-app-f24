@@ -87,7 +87,7 @@ export default function QueryProcessor(query: string): string {
     const num1 = parseInt(combinedMatch[1], 10);
     const num2 = parseInt(combinedMatch[2], 10);
     const num3 = parseInt(combinedMatch[3], 10);
-    return (num1 * num2 + num3).toString();
+    return ((num1 * num2) + num3).toString();
   }
   return "";
 }
