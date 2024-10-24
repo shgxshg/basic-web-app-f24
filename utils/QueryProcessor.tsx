@@ -1,3 +1,5 @@
+import { isAbsolute } from "path";
+
 export default function QueryProcessor(query: string): string {
   if (query.toLowerCase().includes("shakespeare")) {
     return (
@@ -59,6 +61,13 @@ export default function QueryProcessor(query: string): string {
     };
     const result = numbers.filter(isPrime);
     return result.join(', ');
+  }
+
+  const subtractionMatch = query.toLowerCase().match(/what is (\d+) minus (\d+)\?/);
+  if (subtractionMatch) {
+    const num1 = parseInt(subtractionMatch[1], 10);
+    const num2 = parseInt(subtractionMatch[2], 10);
+    return Math.abs(num1 - num2).toString();
   }
   return "";
 }
