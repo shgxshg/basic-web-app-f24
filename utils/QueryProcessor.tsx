@@ -82,6 +82,12 @@ export default function QueryProcessor(query: string): string {
     const exponent = parseInt(powerMatch[2], 10);
     return Math.pow(base, exponent).toString();
   }
-  
+  const combinedMatch = query.toLowerCase().match(/what is (\d+) multiplied by (\d+) plus (\d+)\?/);
+  if (combinedMatch) {
+    const num1 = parseInt(combinedMatch[1], 10);
+    const num2 = parseInt(combinedMatch[2], 10);
+    const num3 = parseInt(combinedMatch[3], 10);
+    return (num1 * num2 + num3).toString();
+  }
   return "";
 }
