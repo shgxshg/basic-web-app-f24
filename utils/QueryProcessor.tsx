@@ -38,14 +38,14 @@ export default function QueryProcessor(query: string): string {
     return "87";
   }
 
-  const arithmeticMatch = query.match(/what is (\d+) plus (\d+)\?/i);
+  const arithmeticMatch = query.match(/what is (\d+) plus (\d+)\?/);
   if (arithmeticMatch) {
     const num1 = parseInt(arithmeticMatch[1], 10);
     const num2 = parseInt(arithmeticMatch[2], 10);
     return (num1 + num2).toString();
   }
 
-  const largestNumberMatch = query.match(/which of the following numbers is the largest: ([\d, ]+)\?/i);
+  const largestNumberMatch = query.match(/which of the following numbers is the largest: ([\d, ]+)\?/);
   if (largestNumberMatch) {
     const numbers = largestNumberMatch[1].split(',').map(num => parseInt(num.trim(), 10));
     const largestNumber = Math.max(...numbers);
